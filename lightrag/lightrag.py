@@ -859,7 +859,8 @@ class LightRAG:
                     }
                 )
                 # Cleaning history_messages without breaking it as a shared list object
-                del pipeline_status["history_messages"][:]
+                if "history_messages" in pipeline_status and isinstance(pipeline_status["history_messages"], list):
+                    del pipeline_status["history_messages"][:]
             else:
                 # Another process is busy, just set request flag and return
                 pipeline_status["request_pending"] = True
